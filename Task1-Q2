@@ -1,0 +1,24 @@
+using System;
+
+namespace DeviceMonitor
+{
+    class TemperatureModule
+    {
+        public static void Main(string[] args)
+        {
+            // This becomes the ONLY startup entry point
+            Console.WriteLine("Temperature Module Active");
+            VibrationModule.Run();
+        }
+    }
+
+    class VibrationModule
+    {
+        // Calling Vibration module helper method
+        public static void Run()
+        {
+            Console.WriteLine("vibration Module Running");
+        }
+    }
+}
+
