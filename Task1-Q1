@@ -1,0 +1,21 @@
+
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        string tranctionId = "TX123456789";
+        decimal Amount = 1000000.75m;
+        bool isinnternational = true;
+        decimal customerRating = 4.5m;
+        DateTime tranctiontimestamp = DateTime.Now;
+        int rewardPoints = 250000;
+
+        Console.WriteLine($"Transaction ID: {tranctionId}");
+        Console.WriteLine($"Amount: {Amount:C}");
+        Console.WriteLine($"Is International: {isinnternational}");
+        Console.WriteLine($"Customer Rating: {customerRating}");
+        Console.WriteLine($"tranction Timestamp: {tranctiontimestamp}");
+        Console.WriteLine($"RewardPoints:{rewardPoints}");
+
+    }
+}
