@@ -1,0 +1,93 @@
+using System;
+
+class SmartElectricityBillingApp
+{
+    static void Main()
+    {
+        Console.Write("Enter number of consumers: ");
+        int N = int.Parse(Console.ReadLine());
+
+        // Summary variables
+        double totalRevenue = 0;
+        double highestBill = 0;
+        string highestConsumerID = "";
+        int domesticCount = 0;
+        int commercialCount = 0;
+
+        for (int i = 1; i <= N; i++)
+        {
+            Console.WriteLine($"\n--- Enter details for Consumer {i} ---");
+
+            Console.Write("Consumer ID: ");
+            string consumerID = Console.ReadLine();
+
+            Console.Write("Units Consumed: ");
+            int units = int.Parse(Console.ReadLine());
+
+            Console.Write("Connection Type (1 = Domestic, 2 = Commercial): ");
+            int type = int.Parse(Console.ReadLine());
+
+            string typeName = (type == 1) ? "Domestic" : "Commercial";
+
+            // Count types
+            if (type == 1) domesticCount++;
+            else commercialCount++;
+
+            // Step 1: Base charge calculation
+            double baseCharge = 0;
+
+            if (type == 1)   // Domestic
+            {
+                if (units <= 100) baseCharge = units * 1.50;
+                else if (units <= 300) baseCharge = units * 2.50;
+                else baseCharge = units * 4.00;
+            }
+            else             // Commercial
+            {
+                if (units <= 200) baseCharge = units * 5.00;
+                else if (units <= 500) baseCharge = units * 6.50;
+                else baseCharge = units * 8.00;
+            }
+
+            // Step 2: Environmental surcharge (3%)
+            double surcharge = baseCharge * 0.03;
+
+            // Step 3: Penalty (if units > 500)
+            double penalty = (units > 500) ? 200 : 0;
+
+            // Step 4: Total before possible discount
+            double total = baseCharge + surcharge + penalty;
+
+            // Step 5: Discount (if total > 2000)
+            double discount = (total > 2000) ? total * 0.05 : 0;
+
+            // Step 6: Final bill
+            double finalBill = total - discount;
+
+            // Update summary stats
+            totalRevenue += finalBill;
+
+            if (finalBill > highestBill)
+            {
+                highestBill = finalBill;
+                highestConsumerID = consumerID;
+            }
+
+            // Output per consumer
+            Console.WriteLine($"\n{consumerID}  {typeName}");
+            Console.WriteLine($"Units: {units}");
+            Console.WriteLine($"Base Charge: ₹{baseCharge:F2}");
+            Console.WriteLine($"Surcharge (3%): ₹{surcharge:F2}");
+            Console.WriteLine($"Penalty: ₹{penalty:F2}");
+            Console.WriteLine($"Discount: ₹{discount:F2}");
+            Console.WriteLine($"Final Bill: ₹{finalBill:F2}");
+        }
+
+        // --- Summary ---
+        Console.WriteLine("\n--- Month-End Summary ---");
+        Console.WriteLine($"Total Consumers: {N}");
+        Console.WriteLine($"Total Revenue: ₹{totalRevenue:F2}");
+        Console.WriteLine($"Highest Bill: {highestConsumerID}  ₹{highestBill:F2}");
+        Console.WriteLine($"Domestic: {domesticCount}  Commercial: {commercialCount}");
+    }
+}
